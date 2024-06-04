@@ -1,3 +1,9 @@
+
+/**
+cron "40 5 * * *" jd_unFollow.js
+ */
+const $ = new Env('Ip推送');
+
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
@@ -6,7 +12,8 @@ const axios = require('axios'); // 引入 axios 库
 const apiUrl = 'https://api.ipify.org?format=json';
 const ipFileName = 'ip.txt';
 const ipRecordFileName = 'ip.json';
-const pushplusToken = 'ba90de22f9cb490390ad0928dc9ace88'; // 替换为您的 PushPlus Token
+const pushplusToken = ''; //PushPlus Token
+//https://www.pushplus.plus/push1.html
 
 // 读取之前记录的IP地址
 let ipRecord = {};
