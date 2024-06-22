@@ -1,9 +1,3 @@
-
-/**
-cron "40 5 * * *" jd_unFollow.js
- */
-const $ = new Env('Ip推送');
-
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
@@ -12,8 +6,7 @@ const axios = require('axios'); // 引入 axios 库
 const apiUrl = 'https://api.ipify.org?format=json';
 const ipFileName = 'ip.txt';
 const ipRecordFileName = 'ip.json';
-const pushplusToken = ''; //PushPlus Token
-//https://www.pushplus.plus/push1.html
+const pushplusToken = '6a02d320968b424793640d0b375314e0'; // 替换为您的 PushPlus Token
 
 // 读取之前记录的IP地址
 let ipRecord = {};
@@ -54,7 +47,7 @@ https.get(apiUrl, (res) => {
                 appendToFile(ipFileName, contentToAdd);
             
                 // 发送 PushPlus 推送（如果IP未改变）
-                sendPushplusNotification(`IP 未改变: 当前IP是 ${ip}, 上次记录时间是 ${previousTimestamp}`);
+                sendPushplusNotification(`IP 未改变: 当前IP是 ${ip}, 上次 ${previousTimestamp}`);
             } else {
                 // 如果未记录，则追加新IP和时间戳，并更新记录
                 const contentToAdd = `${customTimestamp} IP ${ip}\n`;
@@ -65,7 +58,7 @@ https.get(apiUrl, (res) => {
                 writeToFile(ipRecordFileName, ipRecord);
             
                 // 发送 PushPlus 推送（如果IP改变了）
-                sendPushplusNotification(`新的IP地址: ${ip}, 记录时间是 ${customTimestamp}`);
+                sendPushplusNotification(`新的IP地址: ${ip}, 时间 ${customTimestamp}`);
             }
             
             // 辅助函数：发送 PushPlus 推送通知
@@ -76,7 +69,7 @@ https.get(apiUrl, (res) => {
                     content: message
                 })
                 .then(response => {
-                    console.log('PushPlus 推送成功', response.data);
+                    console.log('PushPlus 推送成功');
                 })
                 .catch(error => {
                     console.error('PushPlus 推送失败', error);
@@ -96,7 +89,7 @@ function appendToFile(filePath, content) {
         if (err) {
             console.error('出错:', err);
         } else {
-            console.log(`成功${filePath}`);
+            console.log(`保存到${filePath}`);
         }
     });
 }
